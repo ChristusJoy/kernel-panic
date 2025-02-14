@@ -23,6 +23,13 @@ const TeachableMachine = () => {
 
   useEffect(() => {
     loadModel();
+
+    // Cleanup function to stop webcam when component unmounts
+    return () => {
+      if (webcam) {
+        webcam.stop();
+      }
+    };
   }, []);
 
   const loadModel = async () => {
@@ -34,7 +41,14 @@ const TeachableMachine = () => {
     await newWebcam.play();
     setWebcam(newWebcam);
 
-    document.getElementById("webcam-container").appendChild(newWebcam.canvas);
+    const webcamContainer = document.getElementById("webcam-container");
+
+    // 🚨 Remove any existing webcam before appending a new one
+    if (webcamContainer.firstChild) {
+      webcamContainer.removeChild(webcamContainer.firstChild);
+    }
+
+    webcamContainer.appendChild(newWebcam.canvas);
     loop(newWebcam, loadedModel);
   };
 
@@ -83,7 +97,7 @@ const TeachableMachine = () => {
 
   return (
     <div>
-      <h2>Teachable Machine Waste Detection</h2>
+      <h2>Waste Detection</h2>
       <div id="webcam-container"></div>
       <p>Detecting objects...</p>
     </div>

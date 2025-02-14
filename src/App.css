@@ -1,35 +1,185 @@
+/* ======== Global Styles ======== */
 body {
-    background-color: white;
-    color: black;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  body.dark-mode {
-    background-color: #222;
-    color: white;
-  }
-  
-  .theme-toggle-button {
-    padding: 10px 15px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #ddd;
-    color: black;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .theme-toggle-button:hover {
-    background-color: #bbb;
-  }
-  
-  body.dark-mode .theme-toggle-button {
-    background-color: #444;
-    color: white;
-  }
-  
-  body.dark-mode .theme-toggle-button:hover {
-    background-color: #666;
-  }
-  
+  background-color: white;
+  color: black;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+  background-color: #222;
+  color: white;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-button {
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #ddd;
+  color: black;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.theme-toggle-button:hover {
+  background-color: #bbb;
+}
+
+body.dark-mode .theme-toggle-button {
+  background-color: #444;
+  color: white;
+}
+
+body.dark-mode .theme-toggle-button:hover {
+  background-color: #666;
+}
+
+/* ======== Dashboard Layout ======== */
+.dashboard-container {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 16px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007bff;
+  color: white;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Dark Mode Header */
+body.dark-mode .dashboard-header {
+  background-color: #0056b3;
+  color: white;
+}
+
+/* Two-column layout */
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Individual Tiles */
+.tile {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark Mode Tiles */
+body.dark-mode .tile {
+  background: #333;
+  color: white;
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+}
+
+/* ======== History Table Styles ======== */
+.history-tile {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dark Mode History Tile */
+body.dark-mode .history-tile {
+  background: #333;
+  color: white;
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+}
+
+/* Table Wrapper */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+/* Table Styling */
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode .history-table {
+  background: #444;
+  color: white;
+}
+
+/* Table Header */
+.history-table th {
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  text-transform: uppercase;
+}
+
+body.dark-mode .history-table th {
+  background-color: #0056b3;
+}
+
+/* Table Rows */
+.history-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+body.dark-mode .history-table td {
+  border-bottom: 1px solid #666;
+}
+
+/* Hover Effect */
+.history-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+body.dark-mode .history-table tr:hover {
+  background-color: #555;
+}
+
+/* Waste Type Colors */
+.type-recyclable {
+  color: green;
+  font-weight: bold;
+}
+
+.type-selective {
+  color: orange;
+  font-weight: bold;
+}
+
+.type-non-recyclable {
+  color: red;
+  font-weight: bold;
+}
+
+/* No Data Row */
+.no-data {
+  text-align: center;
+  font-style: italic;
+  color: gray;
+  padding: 16px;
+}
+
+body.dark-mode .no-data {
+  color: lightgray;
+}
