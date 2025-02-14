@@ -1,0 +1,35 @@
+body {
+    background-color: white;
+    color: black;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  body.dark-mode {
+    background-color: #222;
+    color: white;
+  }
+  
+  .theme-toggle-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #ddd;
+    color: black;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .theme-toggle-button:hover {
+    background-color: #bbb;
+  }
+  
+  body.dark-mode .theme-toggle-button {
+    background-color: #444;
+    color: white;
+  }
+  
+  body.dark-mode .theme-toggle-button:hover {
+    background-color: #666;
+  }
+  
