@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import * as tf from "@tensorflow/tfjs";
 import * as tmImage from "@teachablemachine/image";
 import { db } from "../firebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { showToast } from "./ToastNotification";
 
 const TeachableMachine = () => {
-  const modelURL = "https://teachablemachine.withgoogle.com/models/SqWJkpzAZ/model.json";
-  const metadataURL = "https://teachablemachine.withgoogle.com/models/SqWJkpzAZ/metadata.json";
+  const modelURL = "https://teachablemachine.withgoogle.com/models/RcvO8lRpl/model.json";
+  const metadataURL = "https://teachablemachine.withgoogle.com/models/RcvO8lRpl/metadata.json";
 
   const [model, setModel] = useState(null);
   const [webcam, setWebcam] = useState(null);
@@ -71,13 +71,12 @@ const TeachableMachine = () => {
     const type = categories[detectedObject] || "Non-Recyclable";
 
     console.log(`✅ Confirmed detection: ${detectedObject} → ${type}`);
-
+    showToast(`Detected object: ${detectedObject} → (${type})`);
     await addDoc(collection(db, "waste_detections"), {
       name: detectedObject,
       type: type,
       timestamp: Timestamp.now(),
     });
-
     console.log("✅ Data successfully added to Firebase.");
   };
 
