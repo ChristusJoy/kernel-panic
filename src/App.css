@@ -36,13 +36,19 @@ body.dark-mode .theme-toggle-button:hover {
 }
 
 /* ======== Dashboard Layout ======== */
+/* Two-column layout */
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
 .dashboard-container {
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-template-columns: 1fr;
   gap: 16px;
   padding: 16px;
-  max-width: 1200px;
+  max-width: auto;
   margin: auto;
 }
 
@@ -64,12 +70,7 @@ body.dark-mode .dashboard-header {
   color: white;
 }
 
-/* Two-column layout */
-.main-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
+
 
 /* Individual Tiles */
 .tile {
