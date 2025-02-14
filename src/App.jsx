@@ -11,8 +11,8 @@ function App() {
 
   return (
     <>
-      <ToastNotification />
       <h1>Waste Segregation Dashboard</h1>
+      <ToastNotification />
       <ThemeToggleButton  />
       <TeachableMachine />
       <WasteAnalytics />

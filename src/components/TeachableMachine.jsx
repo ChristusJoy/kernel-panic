@@ -71,12 +71,13 @@ const TeachableMachine = () => {
     const type = categories[detectedObject] || "Non-Recyclable";
 
     console.log(`✅ Confirmed detection: ${detectedObject} → ${type}`);
-    showToast(`Detected object: ${detectedObject} → (${type})`);
+
     await addDoc(collection(db, "waste_detections"), {
       name: detectedObject,
       type: type,
       timestamp: Timestamp.now(),
     });
+    showToast(detectedObject);
     console.log("✅ Data successfully added to Firebase.");
   };
 
