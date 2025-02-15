@@ -5,8 +5,8 @@ import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { showToast } from "./ToastNotification";
 
 const TeachableMachine = () => {
-  const modelURL = "https://teachablemachine.withgoogle.com/models/sgxIFGPXc/model.json";
-  const metadataURL = "https://teachablemachine.withgoogle.com/models/sgxIFGPXc/metadata.json";
+  const modelURL = "https://teachablemachine.withgoogle.com/models/i3o23YIdI/model.json";
+  const metadataURL = "https://teachablemachine.withgoogle.com/models/i3o23YIdI/metadata.json";
 
   const [model, setModel] = useState(null);
   const [webcam, setWebcam] = useState(null);
