@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as tmImage from "@teachablemachine/image";
 import { db } from "../firebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { showToast } from "./ToastNotification";
 
 const TeachableMachine = () => {
-  const modelURL = "https://teachablemachine.withgoogle.com/models/RcvO8lRpl/model.json";
-  const metadataURL = "https://teachablemachine.withgoogle.com/models/RcvO8lRpl/metadata.json";
+  const modelURL = "https://teachablemachine.withgoogle.com/models/i3o23YIdI/model.json";
+  const metadataURL = "https://teachablemachine.withgoogle.com/models/i3o23YIdI/metadata.json";
 
   const [model, setModel] = useState(null);
   const [webcam, setWebcam] = useState(null);
-  const detectionCooldown = 10000; // 10 seconds
-  let lastDetectionTime = 0;
+  
+  const detectionCooldown = useRef(10000); // Use ref to persist value
+  const lastDetectionTime = useRef(0);
 
   // Waste categories
   const categories = {
-    "paper": "Recyclable",
-    "metal": "Recyclable",
-    "plastic": "Selective",
-    "elastic": "Non-Recyclable",
+    paper: "Recyclable",
+    metal: "Recyclable",
+    plastic: "Selective",
+    elastic: "Non-Recyclable",
   };
 
   useEffect(() => {
     loadModel();
 
-    // Cleanup function to stop webcam when component unmounts
     return () => {
       if (webcam) {
         webcam.stop();
@@ -43,7 +43,6 @@ const TeachableMachine = () => {
 
     const webcamContainer = document.getElementById("webcam-container");
 
-    // 🚨 Remove any existing webcam before appending a new one
     if (webcamContainer.firstChild) {
       webcamContainer.removeChild(webcamContainer.firstChild);
     }
@@ -58,8 +57,8 @@ const TeachableMachine = () => {
       webcamInstance.update();
 
       const now = Date.now();
-      if (now - lastDetectionTime >= detectionCooldown) {
-        lastDetectionTime = now;
+      if (now - lastDetectionTime.current >= detectionCooldown.current) {
+        lastDetectionTime.current = now; // Update last detection time
         await predict(modelInstance, webcamInstance);
       }
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -75,14 +74,21 @@ const TeachableMachine = () => {
 
     const detectedObject = highestPrediction.className.trim().toLowerCase();
 
-    // 🚨 IGNORE "Nothing" category properly
     if (detectedObject === "nothing" || highestPrediction.probability < 0.85) {
       console.log("🚫 No valid object detected OR low confidence, skipping Firebase update.");
       return;
     }
 
-    // Assign category properly
     const type = categories[detectedObject] || "Non-Recyclable";
+
+    // 🚨 Apply cooldown logic correctly using useRef
+    if (type === "Selective") {
+      detectionCooldown.current = 30000; // Increase cooldown to 30 sec
+      console.log("⏳ Cooldown increased to 30 sec for selective waste");
+    } else {
+      detectionCooldown.current = 10000; // Reset to 10 sec for other types
+      console.log("⏳ Cooldown reset to 10 sec");
+    }
 
     console.log(`✅ Confirmed detection: ${detectedObject} → ${type}`);
 
@@ -91,6 +97,7 @@ const TeachableMachine = () => {
       type: type,
       timestamp: Timestamp.now(),
     });
+
     showToast(detectedObject);
     console.log("✅ Data successfully added to Firebase.");
   };
